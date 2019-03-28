@@ -3,16 +3,20 @@ import visa
 # Inicializamos el Resource Manager de visa. En el caso de pyvisa-py, se coloca
 # el '@py'. Sino, con NiVisa, va vacío.
 
+
 rm = visa.ResourceManager('@py')
+data = rm.list_resources()
 
 #inst.query("SOUR1:FREQ:FIX 1")
 
 
-class Tek:
+class Tek(object):
 
     def __init__(self, rm, num):
-        data = rm.list_resources()
+        # Abrimos el objeto a utilizar. Lo identificamos con algún nombre (el 
+        # dado por la pc)
         self.inst = rm.open_resource('{}'.format(data[num]))
+        self.name = data[num]
         
     def identity(self):
         #Devuelve el nombre del instrumento según el fabricante.
